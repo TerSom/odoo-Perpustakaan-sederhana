@@ -1,0 +1,54 @@
+<odoo>
+    <!-- List View -->
+    <record id="view_library_teacher_list" model="ir.ui.view">
+        <field name="name">library.teacher.list</field>
+        <field name="model">library.teacher</field>
+        <field name="arch" type="xml">
+            <list string="Teacher List">
+                <field name="name"/>
+                <field name="nip"/>
+                <field name="email"/>
+                <field name="phoneTeacher"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_library_teacher_form" model="ir.ui.view">
+        <field name="name">library.teacher.form</field>
+        <field name="model">library.teacher</field>
+        <field name="arch" type="xml">
+            <form string="Teacher">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="nip"/>
+                        <field name="phoneTeacher"/>
+                        <field name="email"/>
+                    </group>
+                    <notebook>
+                        <page string="Borrowed Books">
+                            <field name="borrowed_book_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="author"/>
+                                    <field name="quantity"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_library_teacher" model="ir.actions.act_window">
+        <field name="name">Teachers</field>
+        <field name="res_model">library.teacher</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_library_teacher" name="Teachers" parent="menu_library_root" action="action_library_teacher"/>
+</odoo>
