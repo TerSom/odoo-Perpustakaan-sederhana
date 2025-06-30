@@ -1,15 +1,14 @@
 <odoo>
-    <!-- List View -->
-    <record id="view_library_book_list" model="ir.ui.view">
+    <!-- Tree (List) View -->
+    <record id="view_library_book_tree" model="ir.ui.view">
         <field name="name">library.book.list</field>
         <field name="model">library.book</field>
         <field name="arch" type="xml">
-            <list>
+            <list string="Books">
                 <field name="name"/>
                 <field name="author"/>
                 <field name="published_date"/>
                 <field name="quantity"/>
-                <field name="borrowed_by_names"/>
             </list>
         </field>
     </record>
@@ -19,35 +18,18 @@
         <field name="name">library.book.form</field>
         <field name="model">library.book</field>
         <field name="arch" type="xml">
-            <form>
+            <form string="Book Form">
                 <sheet>
                     <group>
                         <field name="cover_image" widget="image" class="oe_avatar"
-                            options="{'preview_image': 'cover_image'}"/>
+                               options="{'preview_image': 'cover_image'}"/>
                     </group>
                     <group>
                         <field name="name"/>
                         <field name="author"/>
                         <field name="published_date"/>
                         <field name="quantity"/>
-                        <field name="borrowed_by_names" readonly="1"/>
                     </group>
-                    <notebook>
-                        <page string="Borrowed by Students">
-                            <field name="borrowed_by_student_ids">
-                                <list>
-                                    <field name="name"/>
-                                </list>
-                            </field>
-                        </page>
-                        <page string="Borrowed by Teachers">
-                            <field name="borrowed_by_teacher_ids">
-                                <list>
-                                    <field name="name"/>
-                                </list>
-                            </field>
-                        </page>
-                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -62,5 +44,7 @@
 
     <!-- Menu -->
     <menuitem id="menu_library_root" name="Perpustakaan"/>
-    <menuitem id="menu_library_book" name="Books" parent="menu_library_root" action="action_library_book"/>
+    <menuitem id="menu_library_book" name="Books"
+              parent="menu_library_root"
+              action="action_library_book"/>
 </odoo>
