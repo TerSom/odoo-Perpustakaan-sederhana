@@ -6,10 +6,15 @@ class LibraryStudent(models.Model):
     _description = 'Student Master'
 
     name = fields.Char(string='Name', required=True)
-    nis = fields.Char(string='NIS')
-    tanggalPinjam = fields.Date(string='Tanggal Pinjam')
-    tanggalKembali = fields.Date(string='Tanggal Kembali')
-    phone = fields.Char(string='Phone')
+    nis = fields.Char(string='NIS',required=True)
+    tanggalPinjam = fields.Date(string='Tanggal Pinjam',required=True)
+    tanggalKembali = fields.Date(string='Tanggal Kembali',required=True)
+    phone = fields.Char(string='Phone',required=True)
+
+    durasiPinjaman = fields.Integer(
+        string="Lama Peminjaman (hari)",
+        compute='durasiHari',
+    )
 
     borrowed_book_ids = fields.Many2many(
         'library.book',
@@ -19,47 +24,37 @@ class LibraryStudent(models.Model):
         string='Borrowed Books'
     )
 
+    @api.depends('tanggalPinjam', 'tanggalKembali')
+    def durasiHari(self):
+        for rec in self:
+            if rec.tanggalPinjam and rec.tanggalKembali:
+                if rec.tanggalPinjam > rec.tanggalKembali:
+                    raise ValidationError(f"masukana tangggal yang benar")
+                else:
+                    rec.durasiPinjaman = (rec.tanggalKembali - rec.tanggalPinjam).days
+            else:
+                rec.durasiPinjaman = 0
+
     @api.model
     def create(self, vals):
+        # Buat record terlebih dahulu
         student = super().create(vals)
 
+        # Setelah create, kurangi stok buku
         if vals.get('borrowed_book_ids'):
             commands = vals['borrowed_book_ids']
             book_ids = []
 
             for cmd in commands:
-                if cmd[0] == 4:  # add single book
+                if cmd[0] == 4:  # link to existing book
                     book_ids.append(cmd[1])
                 elif cmd[0] == 6:  # replace all
                     book_ids = cmd[2]
 
-            new_books = self.env['library.book'].browse(book_ids)
-            for book in new_books:
+            books = self.env['library.book'].browse(book_ids)
+            for book in books:
                 if book.quantity <= 0:
                     raise ValidationError(f"Buku '{book.name}' tidak tersedia.")
                 book.quantity -= 1
 
         return student
-
-    def write(self, vals):
-        for student in self:
-            if vals.get('borrowed_book_ids'):
-                current_books = student.borrowed_book_ids
-                commands = vals['borrowed_book_ids']
-                added_ids = []
-
-                for cmd in commands:
-                    if cmd[0] == 4:  # append
-                        added_ids.append(cmd[1])
-                    elif cmd[0] == 6:  # replace
-                        new_books = self.env['library.book'].browse(cmd[2])
-                        added_books = new_books - current_books
-                        added_ids.extend(added_books.ids)
-
-                books_to_reduce = self.env['library.book'].browse(added_ids)
-                for book in books_to_reduce:
-                    if book.quantity <= 0:
-                        raise ValidationError(f"Buku '{book.name}' tidak tersedia.")
-                    book.quantity -= 1
-
-        return super().write(vals)
