@@ -9,6 +9,7 @@
                 <field name="nis"/>
                 <field name="tanggalPinjam"/>
                 <field name="tanggalKembali"/>
+                <field name="durasiPinjaman"/>
                 <field name="phone"/>
             </list>
         </field>
@@ -26,6 +27,7 @@
                         <field name="nis"/>
                         <field name="tanggalPinjam"/>
                         <field name="tanggalKembali"/>
+                        <field name="durasiPinjaman" readonly="1"/>
                         <field name="phone"/>
                     </group>
 
