@@ -7,7 +7,9 @@
             <list string="Teacher List">
                 <field name="name"/>
                 <field name="nip"/>
-                <field name="email"/>
+                <field name="tanggalPinjam"/>
+                <field name="tanggalKembali"/>
+                <field name="durasiPinjaman"/>
                 <field name="phoneTeacher"/>
             </list>
         </field>
@@ -23,8 +25,10 @@
                     <group>
                         <field name="name"/>
                         <field name="nip"/>
+                        <field name="tanggalPinjam"/>
+                        <field name="tanggalKembali"/>
+                        <field name="durasiPinjaman"/>
                         <field name="phoneTeacher"/>
-                        <field name="email"/>
                     </group>
                     <notebook>
                         <page string="Borrowed Books">
