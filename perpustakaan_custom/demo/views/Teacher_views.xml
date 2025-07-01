@@ -5,6 +5,7 @@
         <field name="model">library.teacher</field>
         <field name="arch" type="xml">
             <list string="Teacher List">
+                <field name="reference"/>
                 <field name="name"/>
                 <field name="nip"/>
                 <field name="tanggalPinjam"/>
@@ -23,6 +24,7 @@
             <form string="Teacher">
                 <sheet>
                     <group>
+                        <field name="reference"/>
                         <field name="name"/>
                         <field name="nip"/>
                         <field name="tanggalPinjam"/>

@@ -5,6 +5,7 @@
         <field name="model">library.student</field>
         <field name="arch" type="xml">
             <list string="Student List">
+                <field name="reference"/>
                 <field name="name"/>
                 <field name="nis"/>
                 <field name="tanggalPinjam"/>
@@ -14,7 +15,7 @@
             </list>
         </field>
     </record>
-
+    
     <!-- Form View (dengan borrowed_book_ids pakai <list>) -->
     <record id="view_library_student_form" model="ir.ui.view">
         <field name="name">library.student.form</field>
@@ -23,6 +24,7 @@
             <form string="Student">
                 <sheet>
                     <group>
+                        <field name="reference"/>
                         <field name="name"/>
                         <field name="nis"/>
                         <field name="tanggalPinjam"/>

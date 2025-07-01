@@ -5,6 +5,7 @@ class LibraryTeacher(models.Model):
     _name = 'library.teacher'
     _description = 'Teacher Master'
 
+    reference = fields.Char(string='No',readonly=True,default="Kosong",copy=False)
     name = fields.Char(string='Name', required=True)
     nip = fields.Char(string='NIP', required=True)
     tanggalPinjam = fields.Date(string='Tanggal Pinjam', required=True)
@@ -36,6 +37,9 @@ class LibraryTeacher(models.Model):
 
     @api.model
     def create(self, vals):
+        if vals.get('reference','Kosong') == 'Kosong':
+            vals['reference'] = self.env['ir.sequence'].next_by_code('Teacher.Request') or '/'
+                    
         # Buat record terlebih dahulu
         teacher = super().create(vals)
 

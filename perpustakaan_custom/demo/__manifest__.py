@@ -18,7 +18,7 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base','web'],
 
     # always loaded
     'data': [
@@ -26,6 +26,12 @@ Long description of module's purpose
         'views/book_views.xml',
         'views/student_views.xml',
         'views/Teacher_views.xml',
+        'report/perpustakaan_student_report_template.xml',
+        'report/perpustakaan_student_report_views.xml',
+        "data/ir_sequence_Student.xml",
+        'data/ir_sequence_Teacher.xml',
+        'report/perpustakaan_teacher_report_template.xml',
+        'report/perpustakaan_teacher_report_views.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
