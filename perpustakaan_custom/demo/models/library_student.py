@@ -16,6 +16,7 @@ class LibraryStudent(models.Model):
     nis = fields.Char(string='NIS', required=True)
     tanggalPinjam = fields.Date(string='Tanggal Pinjam', required=True)
     tanggalKembali = fields.Date(string='Tanggal Kembali', required=True)
+    email = fields.Char(string='Email', required=True)
     phone = fields.Char(string='Phone', required=True)
 
     durasiPinjaman = fields.Integer(

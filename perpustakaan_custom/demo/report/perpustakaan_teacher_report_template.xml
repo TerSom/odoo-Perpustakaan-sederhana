@@ -15,9 +15,9 @@
                                 <td style="border: 1px solid black;">NAME</td>
                                 <td style="border: 1px solid black;">NIP</td>
                                 <td style="border: 1px solid black;">TANGGAL PINJAM</td>
-                                <td style="border: 1px solid black;">TANGGAL KEMBALI</td>
                                 <td style="border: 1px solid black;">DURASI PINJAMAN (HARI) </td>
                                 <td style="border: 1px solid black;">PHONE</td>
+                                <td style="border: 1px solid black;">TANGGAL KEMBALI</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,13 +36,13 @@
                                         <t t-esc="doc.tanggalPinjam"></t>
                                     </td>
                                     <td style="border: 1px solid black;">
-                                        <t t-esc="doc.tanggalKembali"></t>
-                                    </td>
-                                    <td style="border: 1px solid black;">
                                         <t t-esc="doc.durasiPinjaman"></t>
                                     </td>
                                     <td style="border: 1px solid black;">
                                         <t t-esc="doc.phoneTeacher"></t>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <t t-esc="doc.tanggalKembali"></t>
                                     </td>
                                 </tr>
                             </t>
