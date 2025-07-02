@@ -53,19 +53,57 @@ class LibraryStudent(models.Model):
 
         # Kurangi stok buku yang dipinjam
         if vals.get('borrowed_book_ids'):
-            commands = vals['borrowed_book_ids']
-            book_ids = []
+            book_ids = self._extract_book_ids(vals['borrowed_book_ids'])
+            self._update_book_stock(book_ids, decrease=True)
 
-            for cmd in commands:
-                if cmd[0] == 4:  # link ke buku existing
-                    book_ids.append(cmd[1])
-                elif cmd[0] == 6:  # replace semua
-                    book_ids = cmd[2]
+        return student
 
-            books = self.env['library.book'].browse(book_ids)
-            for book in books:
+    def write(self, vals):
+        for rec in self:
+            # Simpan buku lama sebelum update
+            old_books = rec.borrowed_book_ids
+
+            res = super(LibraryStudent, rec).write(vals)
+
+            if 'borrowed_book_ids' in vals:
+                new_books = rec.borrowed_book_ids
+
+                removed_books = old_books - new_books
+                added_books = new_books - old_books
+
+                # Tambah stok buku yang dihapus
+                for book in removed_books:
+                    book.quantity += 1
+
+                # Kurangi stok buku yang ditambahkan
+                for book in added_books:
+                    if book.quantity <= 0:
+                        raise ValidationError(f"Buku '{book.name}' tidak tersedia.")
+                    book.quantity -= 1
+
+        return True
+
+    def _extract_book_ids(self, commands):
+        """
+        Ekstrak ID buku dari command many2many
+        """
+        book_ids = []
+        for cmd in commands:
+            if cmd[0] == 4:
+                book_ids.append(cmd[1])
+            elif cmd[0] == 6:
+                book_ids = cmd[2]
+        return book_ids
+
+    def _update_book_stock(self, book_ids, decrease=False):
+        """
+        Tambah atau kurangi stok buku
+        """
+        books = self.env['library.book'].browse(book_ids)
+        for book in books:
+            if decrease:
                 if book.quantity <= 0:
                     raise ValidationError(f"Buku '{book.name}' tidak tersedia.")
                 book.quantity -= 1
-
-        return student
+            else:
+                book.quantity += 1

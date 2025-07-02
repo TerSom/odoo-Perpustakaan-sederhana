@@ -31,8 +31,7 @@ Long description of module's purpose
         "data/ir_sequence_Student.xml",
         'data/ir_sequence_Teacher.xml',
         'report/perpustakaan_teacher_report_template.xml',
-        'report/perpustakaan_teacher_report_views.xml',
-        'data/email_template_student.xml'
+        'report/perpustakaan_teacher_report_views.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
