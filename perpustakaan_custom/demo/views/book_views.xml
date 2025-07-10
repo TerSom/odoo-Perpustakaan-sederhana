@@ -19,6 +19,12 @@
         <field name="model">library.book</field>
         <field name="arch" type="xml">
             <form string="Book Form">
+                <header>
+                    <button name="download_excel_book"
+                        type="object"
+                        string="Download Excel"
+                        class="btn-primary" />
+                </header>
                 <sheet>
                     <group>
                         <field name="cover_image" widget="image" class="oe_avatar"

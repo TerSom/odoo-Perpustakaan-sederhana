@@ -32,7 +32,6 @@
                         <field name="durasiPinjaman" readonly="1" />
                         <field name="phone" />
                     </group>
-
                     <notebook>
                         <page string="Borrowed Books">
                             <field name="borrowed_book_ids">
